@@ -36,12 +36,12 @@ const Reset = () => {
     }
 }
 
-// const UserUpdate = () => {
-//     return {
-//         type: 'user_update',
-//         payload: { name: 'John sing', email: 'tiskule23voum@gmail.com' }
-//     }
-// }
+const UserUpdate = () => {
+    return {
+        type: 'user_update',
+        payload: { name: 'John sing', email: 'tiskule23voum@gmail.com' }
+    }
+}
 
 //  reducer 
 const reCheckDataSlices = (state = initialStateCounter , action) => {
