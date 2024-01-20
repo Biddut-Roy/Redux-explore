@@ -17,6 +17,10 @@ const Increment_By_value = 'INCREMENT_BY_VALUE'
 const initialStateCounter = {
     count: 0
 }
+const AddUserState = {
+    user:["jack"],
+    count: 1
+}
 
 //  action 
 const increment = () => {
@@ -43,15 +47,15 @@ const IncrementByInputValue = (value) => {
 
 }
 
-const UserUpdate = () => {
+const UserUpdate = (user) => {
     return {
         type: 'user_update',
-        payload: { name: 'John sing', email: 'tiskule23voum@gmail.com' }
+        payload: user,
     }
 }
 
 //  reducer 
-const reCheckDataSlices = (state = initialStateCounter , action) => {
+const reCheckDataSlices = (state = AddUserState , action) => {
     switch (action.type) {
         case INCREMENT :
             return {
@@ -73,6 +77,11 @@ const reCheckDataSlices = (state = initialStateCounter , action) => {
                 ...state,
                 count: state.count + action.payload
             }
+        case 'user_update':
+            return {
+                user: [...state.user, action.payload],
+                count: state.count + 1 
+            }
     
         default:
             state
@@ -87,7 +96,9 @@ store.subscribe(()=>{
     console.log(store.getState());
 })
 
- store.dispatch(increment())
- store.dispatch(increment())
+//  store.dispatch(increment())
+//  store.dispatch(increment())
 
- store.dispatch(IncrementByInputValue(5))
+//  store.dispatch(IncrementByInputValue(5))
+
+store.dispatch(UserUpdate("ross"))
