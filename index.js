@@ -12,13 +12,13 @@ const { createStore } = require("redux")
 const INCREMENT  = 'INCREMENT'
 const DECREMENT = 'DECREMENT'
 const RESET = 'RESET'
+const Increment_By_value = 'INCREMENT_BY_VALUE'
 
 const initialStateCounter = {
     count: 0
 }
 
 //  action 
-
 const increment = () => {
     return {
         type:INCREMENT
@@ -35,6 +35,13 @@ const Reset = () => {
         type: RESET
     }
 }
+const IncrementByInputValue = (value) => {
+    return{
+        type: Increment_By_value,
+        payload: value,  
+    }
+
+}
 
 const UserUpdate = () => {
     return {
@@ -46,20 +53,25 @@ const UserUpdate = () => {
 //  reducer 
 const reCheckDataSlices = (state = initialStateCounter , action) => {
     switch (action.type) {
-        case increment :
+        case INCREMENT :
             return {
                 ...state,
-                count: action.count + 1
+                count: state.count + 1
             }
-        case Decrement :
+        case DECREMENT :
             return {
                 ...state,
-                count: action.count - 1
+                count: state.count - 1
             }
-        case Decrement :
+        case RESET:
             return {
                 ...state,
                 count: 0
+            }
+        case Increment_By_value:
+            return {
+                ...state,
+                count: state.count + action.payload
             }
     
         default:
@@ -74,6 +86,8 @@ const store = createStore(reCheckDataSlices)
 store.subscribe(()=>{
     console.log(store.getState());
 })
+
  store.dispatch(increment())
  store.dispatch(increment())
- store.dispatch(Decrement())
+
+ store.dispatch(IncrementByInputValue(5))
