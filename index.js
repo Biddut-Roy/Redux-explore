@@ -1,104 +1,50 @@
-// plan- 
-// State- store 0 .{array , object or any type}
-// action- increment , Decrement and Reset . {array function, return data {} under type , payload}
-// reducer- array function 2 argument state and action - under switch condition case-1 (any-action set) to return {} and Default state show.
-// create-Store- show data store variable.subscribe( under array function under console.log(store variable.getState()))
-//  store data action to reducer condition data store set. store variable.dispatch(create_action())
+const { createStore } = require("redux");
 
-// state
+const GET_PRODUCT = "GET_PRODUCT"
+const ADD_PRODUCT = "ADD_PRODUCT"
 
-const { createStore } = require("redux")
-
-const INCREMENT  = 'INCREMENT'
-const DECREMENT = 'DECREMENT'
-const RESET = 'RESET'
-const Increment_By_value = 'INCREMENT_BY_VALUE'
-
-const initialStateCounter = {
-    count: 0
-}
-const AddUserState = {
-    user:["jack"],
-    count: 1
+const initialProductStore={
+   product:["sugar","solt"],
+   productCount: 2
 }
 
-//  action 
-const increment = () => {
-    return {
-        type:INCREMENT
-    }
-}
-
-const Decrement = () => {
+const getProduct = () => {
     return{
-        type: DECREMENT
+        type: GET_PRODUCT
     }
-}
-const Reset = () => {
+};
+
+const addProduct = (product) => {
     return{
-        type: RESET
+        type: ADD_PRODUCT,
+        payload: product
     }
-}
-const IncrementByInputValue = (value) => {
-    return{
-        type: Increment_By_value,
-        payload: value,  
-    }
+};
 
-}
+const productReducer = (state= initialProductStore , action) =>{
+    switch (action.type){
+        case GET_PRODUCT:
+            return{
+                ...state
+            }
+        case ADD_PRODUCT:
+            return{
+                product: [...state.product, action.payload],
+                productCount: state.productCount + 1
+            }
 
-const UserUpdate = (user) => {
-    return {
-        type: 'user_update',
-        payload: user,
-    }
-}
-
-//  reducer 
-const reCheckDataSlices = (state = AddUserState , action) => {
-    switch (action.type) {
-        case INCREMENT :
-            return {
-                ...state,
-                count: state.count + 1
-            }
-        case DECREMENT :
-            return {
-                ...state,
-                count: state.count - 1
-            }
-        case RESET:
-            return {
-                ...state,
-                count: 0
-            }
-        case Increment_By_value:
-            return {
-                ...state,
-                count: state.count + action.payload
-            }
-        case 'user_update':
-            return {
-                user: [...state.user, action.payload],
-                count: state.count + 1 
-            }
-    
         default:
-            state
+            return{
+                ...state
+            }
     }
 }
 
 
-
-// store create
-const store = createStore(reCheckDataSlices)
-store.subscribe(()=>{
+const store = createStore(productReducer)
+ store.subscribe(()=>{
     console.log(store.getState());
-})
+ })
 
-//  store.dispatch(increment())
-//  store.dispatch(increment())
-
-//  store.dispatch(IncrementByInputValue(5))
-
-store.dispatch(UserUpdate("ross"))
+ store.dispatch(getProduct())
+ store.dispatch(addProduct("hor"))
